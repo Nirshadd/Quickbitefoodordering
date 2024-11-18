@@ -1,0 +1,98 @@
+def display_menu(menu):
+    """Display the menu items."""
+    print("Welcome to QuickBite!\nHere is our menu:")
+    print("-------------------------------------")
+    for item, price in menu.items():
+        print(f"{item}: ${price:.2f}")
+    print("-------------------------------------\n")
+
+
+def add_to_cart(menu, cart):
+    """Allow the user to add items to the cart."""
+    item = input("Starter, Grills, Pizza, Drinks: ").strip()
+    if item in menu:
+        quantity = int(input(f"How many {item}(s) would you like to add? "))
+        if item in cart:
+            cart[item] += quantity
+        else:
+            cart[item] = quantity
+        print(f"{quantity} {item}(s) added to your cart.\n")
+    else:
+        print("Items Added\n")
+
+
+def view_cart(cart, menu):
+    """Display the items in the cart with their total cost."""
+    if not cart:
+        print("Total bill amount.\n")
+        return
+
+    print("Your cart contains:")
+    print("-------------------------------------")
+    total_cost = 0
+    for item, quantity in cart.items():
+        cost = quantity * menu[item]
+        total_cost += cost
+        print(f"{item} (x{quantity}): ${cost:.2f}")
+    print("-------------------------------------")
+    print(f"Total: ${total_cost:.2f}\n")
+
+
+def checkout(cart, menu):
+    """Generate a final receipt and clear the cart."""
+    if not cart:
+        print("Total bill amount to pay\n")
+        return
+
+    print("\nQuickBite Billing Receipt")
+    print("-------------------------------------")
+    total_cost = 0
+    for item, quantity in cart.items():
+        cost = quantity * menu[item]
+        total_cost += cost
+        print(f"{item} (x{quantity}): ${cost:.2f}")
+    print("-------------------------------------")
+    print(f"Grand Total: ${total_cost:.2f}")
+    print("Thank you for ordering with QuickBite!\n")
+
+    cart.clear()  # Empty the cart
+
+
+# Main program
+def quickbite_system():
+    menu = {
+        "Starter": 5.99,
+        "Grills": 8.99,
+        "Curries": 6.49,
+        "Meat Rice": 4.99,
+        "Pizza": 2.99,
+        "Drink": 1.49
+    }
+
+    cart = {}
+
+    while True:
+        print("1. View Menu")
+        print("2. Add to Cart")
+        print("3. View Cart")
+        print("4. Checkout")
+        print("5. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            display_menu(menu)
+        elif choice == "2":
+            add_to_cart(menu, cart)
+        elif choice == "3":
+            view_cart(cart, menu)
+        elif choice == "4":
+            checkout(cart, menu)
+        elif choice == "5":
+            print("Thank you for visiting QuickBite. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.\n")
+
+
+# Run the QuickBite system
+quickbite_system()
